@@ -41,7 +41,9 @@ class ApplicationsViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.navigationBar.barTintColor = UIColor(hexColor: "f8f8f8")
         navigationController?.navigationBar.tintColor = UIColor.black
+        #if os(iOS)
         UIApplication.shared.statusBarStyle = .default
+        #endif
     }
     
     override func didReceiveMemoryWarning() {
@@ -71,7 +73,9 @@ class ApplicationsViewController: UITableViewController {
         cell.imageView?.layer.borderWidth = 0.5
         
         cell.imageView?.layer.shouldRasterize = true
+        #if os(iOS)
         cell.imageView?.layer.rasterizationScale = UIScreen.main.scale
+        #endif
         
         return cell!
     }

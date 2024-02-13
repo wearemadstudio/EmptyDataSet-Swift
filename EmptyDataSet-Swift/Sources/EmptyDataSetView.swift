@@ -217,8 +217,11 @@ public class EmptyDataSetView: UIView {
 //            contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[customView]|", options: [], metrics: nil, views: ["customView": customView]))
 //            contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[customView]|", options: [], metrics: nil, views: ["customView": customView]))
         } else {
-            
+            #if os(iOS)
             let width = frame.width > 0 ? frame.width : UIScreen.main.bounds.width
+            #else
+            let width = frame.width > 0 ? frame.width : .zero
+            #endif
             let padding = roundf(Float(width/16.0))
             let verticalSpace = self.verticalSpace  // Default is 11 pts
             

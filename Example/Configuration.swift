@@ -404,7 +404,11 @@ struct Configuration {
     var verticalOffset: CGFloat {
         switch app  {
         case .Kickstarter:
-            var offset = UIApplication.shared.statusBarFrame.height
+            #if os(iOS)
+            var offset: CGFloat = UIApplication.shared.statusBarFrame.height
+            #else
+            var offset: CGFloat = .zero
+            #endif
             offset += (controller.navigationController?.navigationBar.frame.height)!
             return -offset
         case .Twitter:
@@ -503,7 +507,9 @@ extension Configuration {
             tintColor = UIColor(hexColor: "fc6246")
         default:
             barColor = UIColor(hexColor: "f8f8f8")
+            #if os(iOS)
             tintColor = UIApplication.shared.keyWindow?.tintColor
+            #endif
         }
         
         if let logo = UIImage.init(named: "logo_" + app.display_name!.lowercased()) {
@@ -518,11 +524,13 @@ extension Configuration {
     }
     
     func configureStatusBar() {
+        #if os(iOS)
         switch app {
         case .Camera, .Facebook, .Fancy, .Foursquare, .Instagram, .Path, .Skype, .Tumblr, .Twitter, .Vesper, .Vine:
             UIApplication.shared.statusBarStyle = .lightContent
         default:
             UIApplication.shared.statusBarStyle = .default
         }
+        #endif
     }
 }

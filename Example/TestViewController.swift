@@ -21,8 +21,17 @@ class TestViewController: UIViewController, EmptyDataSetSource, EmptyDataSetDele
         let navBarButtom = UIBarButtonItem(title: "Reload", style: .plain, target: self, action: #selector(reload))
         self.navigationItem.rightBarButtonItem = navBarButtom
         
-        let topHeight = UIApplication.shared.statusBarFrame.height + 44
-        tableView = UITableView(frame: CGRect(x: 0, y: topHeight, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - topHeight))
+        
+    }
+    
+    override func viewIsAppearing(_ animated: Bool) {
+        super.viewIsAppearing(animated)
+        #if os(iOS)
+        let topHeight: CGFloat = UIApplication.shared.statusBarFrame.height + 44
+        #else
+        let topHeight: CGFloat = 44
+        #endif
+        tableView = UITableView(frame: CGRect(x: 0, y: topHeight, width: view.frame.width, height: view.frame.height - topHeight))
         tableView.delegate = self
         tableView.dataSource = self
         tableView.tableFooterView = UIView()
@@ -40,8 +49,6 @@ class TestViewController: UIViewController, EmptyDataSetSource, EmptyDataSetDele
         if #available(iOS 11.0, *) {
             tableView.contentInsetAdjustmentBehavior = .never
         }
-        
-        
     }
 
     override func didReceiveMemoryWarning() {
